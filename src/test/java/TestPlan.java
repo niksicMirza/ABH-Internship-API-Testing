@@ -1,8 +1,3 @@
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
-import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -10,7 +5,7 @@ import java.io.IOException;
 
 import static io.restassured.RestAssured.*;
 
-public class Mirza {
+public class TestPlan {
 
   @BeforeTest
   static void preCondition() {

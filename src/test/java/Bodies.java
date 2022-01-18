@@ -13,12 +13,8 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class Bodies {
 
-  public String a(){
-    String a = "aaa";
-    return a;
-  }
 
-  public Response login(User1 user, User2 user1, String API) {
+  public void login(User1 user, User2 user1, String API) {
     Response loginResponse = RestAssured.given().
             contentType(ContentType.JSON).
             body(user).
@@ -34,7 +30,6 @@ public class Bodies {
 
     user1.setEmail(loginResponse.jsonPath().get("email"));
     user1.setId(loginResponse.jsonPath().get("id"));
-    return loginResponse;
   }
 
   public void register(User1 user, String API) {
