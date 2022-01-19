@@ -6,7 +6,7 @@ pipeline {
     }
     stages
     {
-      stage('checkout')
+      stage('Checkout')
       {
         steps
         {
@@ -22,7 +22,7 @@ pipeline {
           bat 'mvn test'
         }
       }
-      stage('reports') {
+      stage('Reports') {
       steps {
         script {
           allure([
@@ -37,7 +37,7 @@ pipeline {
         }
         } 
       }
-      stage("aaa"){
+      stage("Zip Report File"){
           steps{
         script{
             bat "del test.zip"
