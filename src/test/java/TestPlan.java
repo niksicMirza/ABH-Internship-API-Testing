@@ -28,14 +28,13 @@ public class TestPlan {
   public void apiTest() throws IOException {
     Bodies bodies = new Bodies();
 
-
     bodies.register(user1, Utils.API_REGISTER_URL);
 
     Utils.enterEmailInTxtFile(user1.getEmail());
 
     bodies.login(user1, user2, Utils.API_LOGIN_URL);
 
-    bodies.getUser(user1, user2, Utils.API_GET_USER_URL);
+    bodies.getUser(user1, user2, Utils.API_GET_USER_URL, Utils.STATUS_ACTIVE);
 
     bodies.updateUser(user2, user1, shippingDetails, paymentDetails, Utils.API_UPDATE_USER);
 
@@ -44,5 +43,9 @@ public class TestPlan {
     bodies.getBidDetails(user1, auctions, priceCount, Utils.API_GET_HIGHEST_BID, Utils.API_GET_NO_OF_BIDS);
 
     bodies.postNewBid(user1, user3, auctions, bids, priceCount, Utils.API_POST_NEW_BID);
+
+    bodies.deactivateUser(user1, user2, Utils.API_DEACTIVATE_USER);
+
+    bodies.getUser(user1, user2, Utils.API_GET_USER_URL, Utils.STATUS_INACTIVE);
   }
 }

@@ -28,7 +28,15 @@ public class Utils {
   public final static String API_POST_NEW_BID = "https://bidba-api.herokuapp.com/api/bids/newBid";
   public final static String API_GET_HIGHEST_BID = "https://bidba-api.herokuapp.com/api/bids/highestBid/";
   public final static String API_GET_NO_OF_BIDS = "https://bidba-api.herokuapp.com/api/bids/noOfBids/";
+  public final static String API_DEACTIVATE_USER = "https://bidba-api.herokuapp.com/api/users/deactivate/";
 
+  public final static String STATUS_ACTIVE = "ACTIVE";
+  public final static String STATUS_INACTIVE = "INACTIVE";
+
+  public final static int STATUS_CODE_OK = 200;
+  public final static int STATUS_CODE_CREATED = 201;
+  public final static int STATUS_CODE_NO_CONTENT = 204;
+  public final static int STATUS_CODE_CONFLICT = 409;
 
   public static String getCurrentDateAndTime(){
     SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");

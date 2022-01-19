@@ -4,12 +4,8 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.json.simple.JSONArray;
 import org.testng.Assert;
-
 import java.util.List;
-
-import static org.hamcrest.Matchers.equalTo;
 
 public class Bodies {
 
@@ -23,7 +19,9 @@ public class Bodies {
             then().
             extract().response();
 
-    Assert.assertEquals(loginResponse.getStatusCode(), 200);
+    Assert.assertEquals(loginResponse.getStatusCode(), Utils.STATUS_CODE_OK);
+    Assert.assertEquals(loginResponse.jsonPath().get("role"), "USER");
+
     user.setAuthenticationToken(loginResponse.jsonPath().get("authenticationToken"));
     user.setEmail(loginResponse.jsonPath().get("email"));
     user.setId(loginResponse.jsonPath().get("id"));
@@ -41,23 +39,24 @@ public class Bodies {
             then().
             extract().response();
 
-    Assert.assertEquals(registerResponse.getStatusCode(), 200);
+    Assert.assertEquals(registerResponse.getStatusCode(), Utils.STATUS_CODE_OK);
     Assert.assertEquals(registerResponse.jsonPath().get("message"), Utils.REGISTER_MESSAGE);
   }
 
-  public void getUser(User1 user, User2 user1, String API) {
+  public void getUser(User1 user, User2 user1, String API, String status) {
     Response userEmailResponse = RestAssured.given().
             header("Authorization", "Bearer " + user.getAuthenticationToken()).
             header("Content-Type", ContentType.JSON).
             header("Accept", ContentType.JSON).
             when().
             get(API + "{email}", user.getEmail()).
-            then().assertThat().
-            statusCode(200).
-            and().contentType(ContentType.JSON).and().
-            body("status", equalTo("ACTIVE")).
+            then().
             extract().
             response();
+
+    Assert.assertEquals(userEmailResponse.getStatusCode(), Utils.STATUS_CODE_OK);
+    Assert.assertEquals(userEmailResponse.jsonPath().get("status"), status);
+    Assert.assertEquals(userEmailResponse.jsonPath().get("role"), "USER");
 
     user1.setFirstName(userEmailResponse.jsonPath().get("firstName"));
     user1.setLastName(userEmailResponse.jsonPath().get("lastName"));
@@ -78,54 +77,18 @@ public class Bodies {
     user.setGender(Utils.randomGender());
 
     String updateUserBody = gson.toJson(user);
-
-    Response r = RestAssured.given().
+    Response updateUserResponse = RestAssured.given().
             header("Authorization", "Bearer " + u1.getAuthenticationToken()).
             header("Content-Type", ContentType.JSON).
             header("Accept", ContentType.JSON).
             body(updateUserBody).
             when().
             put(API + "{id}", user.getId()).
-            then().assertThat().
-            statusCode(200).
-            and().contentType(ContentType.JSON).
+            then().
             extract().
             response();
-  }
 
-  public void pr(User1 user) {
-
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    String updateUserBody = gson.toJson(user);
-    System.out.println(updateUserBody);
-  }
-
-  public void getCategories(User1 user, Categories category, String API) {
-    Response auctionsResponse =
-      RestAssured.given().
-        header("Authorization", "Bearer " + user.getAuthenticationToken()).
-        when().
-        get(API).
-        then().assertThat().
-        statusCode(200).
-        extract().response();
-
-    JsonPath idInst = auctionsResponse.jsonPath();
-    List<String> ids = idInst.getList("id");
-    int index = Utils.randomCategoryID(ids);
-    String instrumentsID = ids.get(index);
-
-    JsonPath nameInst = auctionsResponse.jsonPath();
-    List<String> names = nameInst.getList("name");
-    String name = names.get(index);
-
-    JsonPath instrumentssub = auctionsResponse.jsonPath();
-    List<String> instrumentssubs = instrumentssub.getList("subcategoryOf");
-    String instrumentssubb = instrumentssubs.get(index);
-
-    category.setId(instrumentsID);
-    category.setName(name);
-    category.setSubcategoryOf(instrumentssubb);
+    Assert.assertEquals(updateUserResponse.getStatusCode(), Utils.STATUS_CODE_OK);
   }
 
   public void getBidDetails(User1 user1, Auctions auction, PriceCount priceCount, String API, String API2){
@@ -134,10 +97,10 @@ public class Bodies {
             header("Authorization", "Bearer " + user1.getAuthenticationToken()).
             when().
             get(API + "{auctionID}", auction.getId()).
-            then().assertThat().
-            statusCode(200).
+            then().
             extract().response();
 
+    Assert.assertEquals(highestBidResponse.getStatusCode(), Utils.STATUS_CODE_OK);
     //EXTRACT HIGHEST PRICE
     String currentHighestBid = highestBidResponse.getBody().asString();
     float currentHighestBidF = Float.parseFloat(currentHighestBid);
@@ -147,9 +110,10 @@ public class Bodies {
             header("Authorization", "Bearer " + user1.getAuthenticationToken()).
             when().
             get(API2 + "{auctionID}", auction.getId()).
-            then().assertThat().
-            statusCode(200).
+            then().
             extract().response();
+
+    Assert.assertEquals(bidCountResponse.getStatusCode(), Utils.STATUS_CODE_OK);
     //SET BID COUNT
     String count = bidCountResponse.getBody().asString();
     int count1 = Integer.parseInt(count);
@@ -157,14 +121,16 @@ public class Bodies {
   }
 
   public void getAuction(User2 user, User1 u2, Categories categories, Auctions auctions, Items items, String API) {
+
     Response auctionsResponse =
       RestAssured.given().
         header("Authorization", "Bearer " + u2.getAuthenticationToken()).
         when().
         get(API).
-        then().assertThat().
-        statusCode(200).
+        then().
         extract().response();
+
+    Assert.assertEquals(auctionsResponse.getStatusCode(), Utils.STATUS_CODE_OK);
 
     JsonPath idAuction = auctionsResponse.jsonPath();
     List<String> ids = idAuction.getList("id");
@@ -188,49 +154,45 @@ public class Bodies {
     auctions.setStartPrice(startPrice);
 
     JsonPath categoryIDS = auctionsResponse.jsonPath();
-    List<String> idss = categoryIDS.getList("category.id");
-    String catID = idss.get(index);
-    categories.setId(catID);
+    List<String> categoryIDSList = categoryIDS.getList("category.id");
+    String categoryID = categoryIDSList.get(index);
+    categories.setId(categoryID);
 
     JsonPath categoryNames = auctionsResponse.jsonPath();
-    List<String> names = categoryNames.getList("category.name");
-    String name = names.get(index);
-    categories.setName(name);
+    List<String> categoryNamesList = categoryNames.getList("category.name");
+    String categoryName = categoryNamesList.get(index);
+    categories.setName(categoryName);
 
     JsonPath subCategories = auctionsResponse.jsonPath();
-    List<String> subs = subCategories.getList("category.subcategory");
-    String subCategory = subs.get(index);
+    List<String> subCategoriesList = subCategories.getList("category.subcategory");
+    String subCategory = subCategoriesList.get(index);
     categories.setSubcategoryOf(subCategory);
 
     JsonPath itemIDS = auctionsResponse.jsonPath();
-    List<String> itemidss = itemIDS.getList("item.id");
-    String itemID = itemidss.get(index);
+    List<String> itemIDSList = itemIDS.getList("item.id");
+    String itemID = itemIDSList.get(index);
     items.setId(itemID);
 
     JsonPath itemNames = auctionsResponse.jsonPath();
-    List<String> namesI = itemNames.getList("item.name");
-    String itemName = namesI.get(index);
+    List<String> itemNamesList = itemNames.getList("item.name");
+    String itemName = itemNamesList.get(index);
     items.setName(itemName);
 
-    JsonPath colors = auctionsResponse.jsonPath();
-    List<String> itemColors = colors.getList("item.color");
-    String itemColor = itemColors.get(index);
+    JsonPath itemColors = auctionsResponse.jsonPath();
+    List<String> itemColorsList = itemColors.getList("item.color");
+    String itemColor = itemColorsList.get(index);
     items.setColor(itemColor);
 
     items.setSize(20);
 
-    JsonPath desc = auctionsResponse.jsonPath();
-    List<String> descriptions = desc.getList("item.description");
-    String description = descriptions.get(index);
+    JsonPath descriptions = auctionsResponse.jsonPath();
+    List<String> descriptionsList = descriptions.getList("item.description");
+    String description = descriptionsList.get(index);
     items.setDescription(description);
 
     auctions.setCategory(categories);
     auctions.setSeller(user);
     auctions.setItem(items);
-
-    Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
-    String updateUserBody = gson.toJson(auctions);
-    System.out.println(updateUserBody);
   }
 
   public void postNewBid(User1 u2, User2 bidder, Auctions auctions,Bids bids, PriceCount priceCount, String API) {
@@ -239,12 +201,10 @@ public class Bodies {
     bidder.setId("ae066e96-cec5-4c8e-abb6-b5fef160f295");
 
     bids.setBidAmount(priceCount.getPrice() + 1);
-    System.out.println("BID  " + bids.getBidAmount());
     bids.setAuction(auctions);
     bids.setBidder(bidder);
     Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
     String newBidBody = gson.toJson(bids);
-    System.out.println(newBidBody);
 
     Response newBidResponse = RestAssured.given().
             header("Authorization", "Bearer " + u2.getAuthenticationToken()).
@@ -252,9 +212,19 @@ public class Bodies {
             body(newBidBody).
             when().
             post(API).
-            then().assertThat().
-            statusCode(200).
+            then().
             extract().response();
-    newBidResponse.prettyPrint();
+    Assert.assertEquals(newBidResponse.getStatusCode(),Utils.STATUS_CODE_OK);
+  }
+
+  public void deactivateUser(User1 u2, User2 user2, String API) {
+    Response deactivateUserBody = RestAssured.given().
+            header("Authorization", "Bearer " + u2.getAuthenticationToken()).
+            when().
+            put(API + "{id}", user2.getId()).
+            then().
+            extract().response();
+
+    Assert.assertEquals(deactivateUserBody.getStatusCode(),Utils.STATUS_CODE_NO_CONTENT);
   }
 }
