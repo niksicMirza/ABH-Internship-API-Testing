@@ -44,12 +44,12 @@ pipeline {
         zip zipFile: 'test.zip', archive: false, dir: 'target/allure'
           }
       }
-    }
+    }/*
     stage ('Starting Smoke Test') {
                steps {
                  build job: 'bidba_smoke_test'
                }
-            }
+            }*/
     }
         post {
       success {
