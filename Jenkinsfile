@@ -6,7 +6,7 @@
     }
     stages
     {
-      stage('Checkout')
+      stage('Checkout   ')
       {
         steps
         {
