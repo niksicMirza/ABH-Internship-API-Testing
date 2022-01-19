@@ -1,4 +1,4 @@
-pipeline {
+ pipeline {
     agent any 
     tools
     {
@@ -22,39 +22,43 @@ pipeline {
           bat 'mvn test'
         }
       }
-      stage('Reports') {
-      steps {
-        script {
-          allure([
-                  includeProperties:false,
-                  jdk:'',
-                  properties: [],
-          reportBuildPolicy:
-          'ALWAYS',
-                  results: [[path:
-          'target/allure/allure-results']]
+      stage('Reports')
+      {
+        steps {
+          script {
+            allure([
+              includeProperties:false,
+              jdk:'',
+              properties: [],
+              reportBuildPolicy:
+              'ALWAYS',
+               results: [[path:
+              'target/allure/allure-results']]
             ])
-        }
-        } 
-      }
-      stage("Zip Report File"){
-          steps{
-        script{
-            bat "del test.zip"
-        zip zipFile: 'test.zip', archive: false, dir: 'target/allure'
           }
+        }
       }
-    }/*
-    stage ('Starting Smoke Test') {
-               steps {
-                 build job: 'bidba_smoke_test'
-               }
-            }*/
-    }
-        post {
+      stage("Zip Report File")
+      {
+        steps{
+          script {
+            bat "del test.zip"
+            zip zipFile: 'test.zip', archive: false, dir: 'target/allure'
+          }
+        }
+      }
+      stage ('Starting Smoke Test')
+        {
+         steps {
+           build job: 'bidba_smoke_test'
+         }
+      }
+   }
+    post
+    {
       success {
         bat "echo 'Send mail on success'"
-       emailext attachmentsPattern: 'test.zip',attachLog: true, body: "Api Smoke Passed", mimeType: 'text/html', subject: 'Passed', to: 'sssdprojekat@gmail.com', from:'jenkinsApiSmoke@gmail.com'
+        emailext attachmentsPattern: 'test.zip',attachLog: true, body: "Api Smoke Passed", mimeType: 'text/html', subject: 'Passed', to: 'sssdprojekat@gmail.com', from:'jenkinsApiSmoke@gmail.com'
       }
       failure {
         bat "echo 'Send mail on failure'"
