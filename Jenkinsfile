@@ -45,6 +45,11 @@ pipeline {
           }
       }
     }
+    stage ('Starting Smoke Test') {
+               steps {
+                 build job: 'bidba_smoke_test'
+               }
+            }
     }
         post {
       success {
