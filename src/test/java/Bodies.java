@@ -20,7 +20,7 @@ public class Bodies {
             extract().response();
 
     Assert.assertEquals(loginResponse.getStatusCode(), Utils.STATUS_CODE_OK);
-    Assert.assertEquals(loginResponse.jsonPath().get("role"), "USER");
+    Assert.assertEquals(loginResponse.jsonPath().get("userRole"), "USER");
 
     user.setAuthenticationToken(loginResponse.jsonPath().get("authenticationToken"));
     user.setEmail(loginResponse.jsonPath().get("email"));
@@ -56,7 +56,6 @@ public class Bodies {
 
     Assert.assertEquals(userEmailResponse.getStatusCode(), Utils.STATUS_CODE_OK);
     Assert.assertEquals(userEmailResponse.jsonPath().get("status"), status);
-    Assert.assertEquals(userEmailResponse.jsonPath().get("role"), "USER");
 
     user1.setFirstName(userEmailResponse.jsonPath().get("firstName"));
     user1.setLastName(userEmailResponse.jsonPath().get("lastName"));
