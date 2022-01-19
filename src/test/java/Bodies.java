@@ -236,11 +236,9 @@ public class Bodies {
   public void postNewBid(User1 u2, User2 bidder, Auctions auctions,Bids bids, PriceCount priceCount, String API) {
 
     bids.setId("c38b1c6e-8c73-467d-a96d-61c7fe5719be");
-    bidder.setId("adbfb675-e99b-456b-b976-5494e9f242a5");
-    if (priceCount.getPrice() == 0.0 || priceCount.getCount() == 0) {
-      bids.setBidAmount(auctions.getStartPrice() + 1);
-    }else{
-      bids.setBidAmount(priceCount.getPrice() + 1);}
+    bidder.setId("ae066e96-cec5-4c8e-abb6-b5fef160f295");
+
+    bids.setBidAmount(priceCount.getPrice() + 1);
     System.out.println("BID  " + bids.getBidAmount());
     bids.setAuction(auctions);
     bids.setBidder(bidder);
