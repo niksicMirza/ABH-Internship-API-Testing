@@ -39,7 +39,7 @@ public class Bodies {
             then().
             extract().response();
 
-    Assert.assertEquals(registerResponse.getStatusCode(), Utils.STATUS_CODE_OK);
+    Assert.assertEquals(registerResponse.getStatusCode(), Utils.STATUS_CODE_CREATED);
     Assert.assertEquals(registerResponse.jsonPath().get("message"), Utils.REGISTER_MESSAGE);
   }
 
