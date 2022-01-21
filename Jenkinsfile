@@ -47,7 +47,7 @@
           }
         }
       }
-      stage ('Starting Smoke Test')
+      stage ('Starting Smoke and Regression Test')
         {
          steps {
            build job: 'bidba_smoke_and_regression'
