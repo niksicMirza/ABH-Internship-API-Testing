@@ -6,7 +6,7 @@
     }
     stages
     {
-      stage('Checkout')
+      stage('Checkout   ')
       {
         steps
         {
@@ -47,10 +47,10 @@
           }
         }
       }
-      stage ('Starting Smoke Test')
+      stage ('Starting Smoke and Regression Test')
         {
          steps {
-           build job: 'bidba_smoke_test'
+           build job: 'bidba_smoke_and_regression'
          }
       }
    }
