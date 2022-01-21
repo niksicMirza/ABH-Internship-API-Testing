@@ -50,7 +50,7 @@
       stage ('Starting Smoke Test')
         {
          steps {
-           build job: 'bidba_smoke_test'
+           build job: 'bidba_smoke_and_regression'
          }
       }
    }
