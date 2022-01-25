@@ -30,7 +30,7 @@ I have used following technologies in this project:
 # Run the Test from Command Line
 
 - Navigate to the project folder
-- Enter ```mvn test``` if you want to run smoke test
+- Enter ```mvn test -DsuiteXmlFile="smoke.xml"``` if you want to run smoke test
 
 # Jenkinks
 As you can see, there is a Jenkinsfile in the project. It contains Jenkins pipeline which runs this test, create report and send email containing reports. 
