@@ -30,7 +30,7 @@ I have used following technologies in this project:
 # Run the Test from Command Line
 
 - Navigate to the project folder
-- Enter '''mvn test -DsuiteXmlFile="smoke.xml"''' if you want to run smoke test
+- Enter ```mvn test -DsuiteXmlFile="smoke.xml"``` if you want to run smoke test
 - Enter "mvn test -DsuiteXmlFile="regression.xml"" if you want to run regression tests
 
 # Jenkinks
