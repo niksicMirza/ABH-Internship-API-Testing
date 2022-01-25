@@ -19,7 +19,7 @@
         steps
         {
           echo "Test"
-          bat 'mvn test'
+          bat 'mvn test -DsuiteXmlFile="smoke.xml"'
         }
       }
       stage('Reports')
