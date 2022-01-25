@@ -25,7 +25,7 @@ public class TestPlan {
   public static User2 user3 = User2.builder().createdAt(Utils.getCurrentDateAndTime()).updatedAt(Utils.getCurrentDateAndTime()).email(Utils.randomEmail()).dateOfBirth(Utils.randomPastDate()).paymentDetails(paymentDetails).shippingDetails(shippingDetails).firstName(Utils.randomFirstName()).lastName(Utils.randomLastName()).phoneNum(Utils.randomPhoneNumber()).gender(Utils.randomGender()).build();
 
   @Test(testName = "Smoke test")
-  public void apiTest() throws IOException {
+  public void apiSmokeTest() throws IOException {
     Bodies bodies = new Bodies();
 
     bodies.register(user1, Utils.API_REGISTER_URL);

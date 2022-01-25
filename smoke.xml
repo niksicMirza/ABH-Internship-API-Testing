@@ -5,7 +5,7 @@
         <classes>
             <class name="TestPlan">
                 <methods>
-                    <include name="apiTest"/>
+                    <include name="apiSmokeTest"/>
                 </methods>
             </class>
         </classes>
