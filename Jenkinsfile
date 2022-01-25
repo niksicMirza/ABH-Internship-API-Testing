@@ -42,8 +42,8 @@
       {
         steps{
           script {
-            bat "del test.zip"
-            zip zipFile: 'test.zip', archive: false, dir: 'target/allure'
+            bat "del apiSmoke.zip"
+            zip zipFile: 'apiSmoke.zip', archive: false, dir: 'target/allure'
           }
         }
       }
@@ -58,11 +58,11 @@
     {
       success {
         bat "echo 'Send mail on success'"
-        emailext attachmentsPattern: 'test.zip',attachLog: true, body: "Api Smoke Passed", mimeType: 'text/html', subject: 'Passed', to: 'sssdprojekat@gmail.com', from:'jenkinsApiSmoke@gmail.com'
+        emailext attachmentsPattern: 'apiSmoke.zip',attachLog: true, body: "Api Smoke Passed", mimeType: 'text/html', subject: 'Passed', to: 'sssdprojekat@gmail.com', from:'jenkinsApiSmoke@gmail.com'
       }
       failure {
         bat "echo 'Send mail on failure'"
-        emailext attachmentsPattern: 'test.zip',attachLog: true, body: "Api Smoke Failed", mimeType: 'text/html', subject: 'Failed', to: 'sssdprojekat@gmail.com', from:'jenkinsApiSmoke@gmail.com'
+        emailext attachmentsPattern: 'apiSmoke.zip',attachLog: true, body: "Api Smoke Failed", mimeType: 'text/html', subject: 'Failed', to: 'sssdprojekat@gmail.com', from:'jenkinsApiSmoke@gmail.com'
       }
     }
   }
