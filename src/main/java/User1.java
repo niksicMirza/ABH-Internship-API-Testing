@@ -1,9 +1,7 @@
-import com.google.gson.annotations.Expose;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.json.simple.JSONObject;
 
 import javax.xml.bind.annotation.XmlRootElement;
 

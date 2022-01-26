@@ -11,18 +11,25 @@ public class TestPlan {
   static void preCondition() {
     baseURI = Utils.API_BASE_URL;
   }
-
-
   public static Categories category = Categories.builder().build();
   public static PriceCount priceCount = PriceCount.builder().build();
   public static Items item = Items.builder().build();
   public static Auctions auctions = Auctions.builder().build();
-  public static PaymentDetails paymentDetails = PaymentDetails.builder().expirationDate(Utils.randomFutureDate()).cardNumber(Utils.cardNumber()).verificationCode(Utils.verificationCode()).build();
-  public static ShippingDetails shippingDetails = ShippingDetails.builder().state(Utils.cityAndStateName()).city(Utils.cityAndStateName()).streetName(Utils.streetName()).country(Utils.countryName()).zipCode(Utils.zipCode()).build();
+  public static PaymentDetails paymentDetails = PaymentDetails.builder().expirationDate(Utils.randomFutureDate()).
+                cardNumber(Utils.cardNumber()).verificationCode(Utils.verificationCode()).build();
+  public static ShippingDetails shippingDetails = ShippingDetails.builder().state(Utils.cityAndStateName()).
+                city(Utils.cityAndStateName()).streetName(Utils.streetName()).country(Utils.countryName()).
+                zipCode(Utils.zipCode()).build();
   public static Bids bids = Bids.builder().bidDate(Utils.getCurrentDateAndTime()).build();
-  public static User1 user1 = User1.builder().email(Utils.randomEmail()).dateOfBirth(Utils.randomPastDate()).paymentDetails(paymentDetails).shippingDetails(shippingDetails).firstName(Utils.randomFirstName()).lastName(Utils.randomLastName()).phoneNum(Utils.randomPhoneNumber()).gender(Utils.randomGender()).build();
+  public static User1 user1 = User1.builder().email(Utils.randomEmail()).dateOfBirth(Utils.randomPastDate()).
+                paymentDetails(paymentDetails).shippingDetails(shippingDetails).firstName(Utils.randomFirstName()).
+                lastName(Utils.randomLastName()).phoneNum(Utils.randomPhoneNumber()).gender(Utils.randomGender()).build();
   public static User2 user2 = User2.builder().phoneNum(Utils.randomPhoneNumber()).build();
-  public static User2 user3 = User2.builder().createdAt(Utils.getCurrentDateAndTime()).updatedAt(Utils.getCurrentDateAndTime()).email(Utils.randomEmail()).dateOfBirth(Utils.randomPastDate()).paymentDetails(paymentDetails).shippingDetails(shippingDetails).firstName(Utils.randomFirstName()).lastName(Utils.randomLastName()).phoneNum(Utils.randomPhoneNumber()).gender(Utils.randomGender()).build();
+  public static User2 user3 = User2.builder().createdAt(Utils.getCurrentDateAndTime()).
+                updatedAt(Utils.getCurrentDateAndTime()).email(Utils.randomEmail()).
+                dateOfBirth(Utils.randomPastDate()).paymentDetails(paymentDetails).shippingDetails(shippingDetails).
+                firstName(Utils.randomFirstName()).lastName(Utils.randomLastName()).phoneNum(Utils.randomPhoneNumber()).
+                gender(Utils.randomGender()).build();
 
   @Test(testName = "Smoke test")
   public void apiSmokeTest() throws IOException {
