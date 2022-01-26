@@ -1,5 +1,5 @@
 # rest_assured_testing_bidba
-In this project I have automated an API smoke test for https://bidba.herokuapp.com/. While automating smoke test, I have used RESTassured librariesPage Object Model for easier understanding of code.    
+In this project I have automated an API smoke test for https://bidba.herokuapp.com/.
 
 # Techonologies 
 
