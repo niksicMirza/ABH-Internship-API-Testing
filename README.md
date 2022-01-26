@@ -41,7 +41,7 @@ You can download Jenkins from the following link: https://www.jenkins.io/downloa
 enter ```java -jar *location_of_war_file*``` and hit enter. Jenkins will be opened in localhost. If you want to make Jenkins public so you can use Github webhooks, you can use ngrok.
 
 ## Ngrok
-You can download Jenkins from the following link: https://ngrok.com/. You need to create a free account in order to get Authtoken. When ngrok is downloaded and installed, open 
+You can download Ngrok from the following link: https://ngrok.com/. You need to create a free account in order to get Authtoken. When ngrok is downloaded and installed, open 
 ngrok.exe file and enter ```./ngrok authtoken *your_token*```. Then, enter command ```ngrok http 8080 -host-header="localhost:8080"``` if your jenkins is run on port 8080. If not, just change the port. You will get public URLs which you can use for Github webhooks.
 
 
