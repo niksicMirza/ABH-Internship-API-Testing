@@ -7,6 +7,8 @@ import io.restassured.response.Response;
 import org.testng.Assert;
 import java.util.List;
 
+import static org.hamcrest.Matchers.*;
+
 public class Bodies {
 
 
@@ -51,6 +53,14 @@ public class Bodies {
             when().
             get(API + "{email}", user.getEmail()).
             then().
+            body("firstName", notNullValue()).
+            body("lastName", notNullValue()).
+            body("createdAt", notNullValue()).
+            body("updatedAt", notNullValue()).
+            body("email", notNullValue()).
+            body("password", notNullValue()).
+            body("status", notNullValue()).
+            body("role", notNullValue()).
             extract().
             response();
 
@@ -64,7 +74,7 @@ public class Bodies {
     user1.setUpdatedAt(userEmailResponse.jsonPath().get("updatedAt"));
   }
 
-  public void updateUser(User2 user, User1 u1, ShippingDetails shippingDetails, PaymentDetails paymentDetails, String API) {
+  public void updateUser(User2 user, User1 u1, ShippingDetails shippingDetails, PaymentDetails paymentDetails, String API){
 
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -84,6 +94,10 @@ public class Bodies {
             when().
             put(API + "{id}", user.getId()).
             then().
+            body("shippingDetails", notNullValue()).
+            body("dateOfBirth", notNullValue()).
+            body("gender", notNullValue()).
+            body("paymentDetails", notNullValue()).
             extract().
             response();
 
@@ -97,6 +111,7 @@ public class Bodies {
             when().
             get(API + "{auctionID}", auction.getId()).
             then().
+            body(notNullValue()).
             extract().response();
 
     Assert.assertEquals(highestBidResponse.getStatusCode(), Utils.STATUS_CODE_OK);
@@ -110,6 +125,7 @@ public class Bodies {
             when().
             get(API2 + "{auctionID}", auction.getId()).
             then().
+            body(notNullValue()).
             extract().response();
 
     Assert.assertEquals(bidCountResponse.getStatusCode(), Utils.STATUS_CODE_OK);
@@ -122,12 +138,13 @@ public class Bodies {
   public void getAuction(User2 user, User1 u2, Categories categories, Auctions auctions, Items items, String API) {
 
     Response auctionsResponse =
-      RestAssured.given().
-        header("Authorization", "Bearer " + u2.getAuthenticationToken()).
-        when().
-        get(API).
-        then().
-        extract().response();
+            RestAssured.given().
+                    header("Authorization", "Bearer " + u2.getAuthenticationToken()).
+                    when().
+                    get(API).
+                    then().
+                    body(notNullValue()).
+                    extract().response();
 
     Assert.assertEquals(auctionsResponse.getStatusCode(), Utils.STATUS_CODE_OK);
 
@@ -197,7 +214,7 @@ public class Bodies {
   public void postNewBid(User1 u2, User2 bidder, Auctions auctions,Bids bids, PriceCount priceCount, String API) {
 
     bids.setId("c38b1c6e-8c73-467d-a96d-61c7fe5719be");
-    bidder.setId("ae066e96-cec5-4c8e-abb6-b5fef160f295");
+    bidder.setId("def78e60-e88d-4534-839a-e8602fd70bc7");
 
     bids.setBidAmount(priceCount.getPrice() + 1);
     bids.setAuction(auctions);
@@ -212,7 +229,14 @@ public class Bodies {
             when().
             post(API).
             then().
+            body(notNullValue()).
+            body("bidder.id", notNullValue()).
+            body("id", notNullValue()).
+            body("bidAmount", notNullValue()).
+            body("auction", notNullValue()).
+            body("auction.id", notNullValue()).
             extract().response();
+
     Assert.assertEquals(newBidResponse.getStatusCode(),Utils.STATUS_CODE_OK);
   }
 
@@ -224,6 +248,6 @@ public class Bodies {
             then().
             extract().response();
 
-    Assert.assertEquals(deactivateUserBody.getStatusCode(),Utils.STATUS_CODE_NO_CONTENT);
+    Assert.assertEquals(deactivateUserBody.getStatusCode(), Utils.STATUS_CODE_NO_CONTENT);
   }
 }
