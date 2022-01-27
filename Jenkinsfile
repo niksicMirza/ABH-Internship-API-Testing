@@ -58,11 +58,13 @@
     {
       success{
         bat "echo 'Send email on success'"
-        emailext attachmentsPattern: 'apiSmoke.zip',attachLog: true, body: "Api Smoke Passed", mimeType: 'text/html', subject: 'Passed', to: 'sssdprojekat@gmail.com', from:'jenkinsApiSmoke@gmail.com'
+        emailext attachmentsPattern: 'apiSmoke.zip',attachLog: true, body: "Api Smoke Passed", mimeType: 'text/html',
+        subject: 'Passed', to: 'sssdprojekat@gmail.com', from:'jenkinsApiSmoke@gmail.com'
       }
       failure{
-        bat "echo 'Send email on failure'"
-        emailext attachmentsPattern: 'apiSmoke.zip',attachLog: true, body: "Api Smoke Failed", mimeType: 'text/html', subject: 'Failed', to: 'sssdprojekat@gmail.com', from:'jenkinsApiSmoke@gmail.com'
+        bat "echo 'Send email on failure '"
+        emailext attachmentsPattern: 'apiSmoke.zip',attachLog: true, body: "Api Smoke Failed", mimeType: 'text/html',
+        subject: 'Failed', to: 'sssdprojekat@gmail.com', from:'jenkinsApiSmoke@gmail.com'
       }
     }
   }
