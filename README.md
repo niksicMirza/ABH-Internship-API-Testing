@@ -1,4 +1,4 @@
-# rest_assured_testing_bidba
+# ABH-Internship-API-Testing
 In this project I have automated an API smoke test for https://bidba.herokuapp.com/.
 
 # Techonologies 
@@ -6,6 +6,7 @@ In this project I have automated an API smoke test for https://bidba.herokuapp.c
 I have used following technologies in this project:
 - Java 1.8
 - Maven
+- RestAssured libraries
 - Required dependencies
 - InteliJ (framework)
 
