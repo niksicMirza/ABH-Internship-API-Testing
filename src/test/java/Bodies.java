@@ -214,7 +214,7 @@ public class Bodies {
   public void postNewBid(User1 u2, User2 bidder, Auctions auctions,Bids bids, PriceCount priceCount, String API) {
 
     bids.setId("c38b1c6e-8c73-467d-a96d-61c7fe5719be");
-    bidder.setId("def78e60-e88d-4534-839a-e8602fd70bc7");
+    bidder.setId("0341c2f4-9d85-405c-967b-06232f4aebdf");
 
     bids.setBidAmount(priceCount.getPrice() + 1);
     bids.setAuction(auctions);
