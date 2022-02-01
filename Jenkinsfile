@@ -11,7 +11,7 @@
         steps
         {
           deleteDir()
-          git url:'https://github.com/niksicMirza/rest_assured_testing_bidba.git'
+          git url:'https://github.com/niksicMirza/ABH-Internship-API-Testing'
         }
       }
       stage('Test')
